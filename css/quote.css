@@ -1,0 +1,110 @@
+/* ==========================================
+   QUOTE / ANGEBOT (formular)
+   ========================================== */
+.quote{
+  background:
+    linear-gradient(135deg,rgba(18,37,95,.94),rgba(30,58,138,.92)),
+    url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=70') center/cover;
+  color:var(--white);position:relative
+}
+
+.quote-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center
+}
+
+.quote-left h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.6rem,3vw,2.3rem);margin-bottom:14px;line-height:1.2
+}
+.quote-left p{opacity:.9;margin-bottom:26px;font-size:1.02rem}
+
+.quote-benefits{
+  list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:20px
+}
+.quote-benefits li{
+  display:flex;gap:12px;align-items:center;font-size:.97rem;opacity:.95
+}
+.quote-benefits svg{
+  color:var(--yellow);flex-shrink:0;
+  background:rgba(251,191,36,.15);border-radius:50%;padding:4px;
+  width:26px;height:26px
+}
+
+.quote-form{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:var(--radius-lg);padding:32px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:0 20px 40px rgba(0,0,0,.25)
+}
+
+.form-group{margin-bottom:16px;position:relative}
+.form-group label{
+  display:block;font-size:.85rem;font-weight:600;
+  margin-bottom:6px;opacity:.92
+}
+.form-group label .req{color:var(--yellow);margin-left:3px}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;padding:12px 14px;
+  border:1.5px solid rgba(255,255,255,.22);
+  border-radius:var(--radius-sm);
+  background:rgba(255,255,255,.08);color:var(--white);
+  font-family:var(--font-body);font-size:.95rem;
+  transition:border-color .2s,background .2s
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{color:rgba(255,255,255,.5)}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  outline:none;border-color:var(--yellow);background:rgba(255,255,255,.12)
+}
+.form-group select option{color:var(--gray-900)}
+.form-group textarea{resize:vertical;min-height:90px}
+
+/* Fejl-state (heuristik 5, 9) */
+.form-group.has-error input,
+.form-group.has-error select,
+.form-group.has-error textarea{
+  border-color:#ff6b6b;background:rgba(255,107,107,.08)
+}
+.form-error{
+  display:none;color:#ffb4b4;font-size:.8rem;margin-top:6px;
+  align-items:center;gap:6px
+}
+.form-group.has-error .form-error{display:flex}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.form-submit{
+  width:100%;padding:15px;border:none;border-radius:var(--radius-sm);
+  background:var(--yellow);color:var(--gray-900);
+  font-weight:700;font-size:1.02rem;cursor:pointer;
+  transition:var(--transition);
+  display:flex;align-items:center;justify-content:center;gap:8px
+}
+.form-submit:hover{background:var(--yellow-hover);transform:translateY(-2px);box-shadow:0 8px 20px rgba(251,191,36,.3)}
+.form-submit:disabled{opacity:.7;cursor:not-allowed;transform:none}
+
+.form-hint{text-align:center;font-size:.8rem;opacity:.7;margin-top:12px}
+
+/* Success-besked efter submit (heuristik 1: feedback) */
+.form-success{
+  display:none;background:rgba(74,222,128,.12);
+  border:1px solid rgba(74,222,128,.35);
+  border-radius:var(--radius-sm);padding:16px;
+  align-items:center;gap:12px;margin-bottom:16px
+}
+.form-success.show{display:flex}
+.form-success svg{color:#4ade80;flex-shrink:0}
+.form-success-content{font-size:.92rem}
+.form-success-content strong{display:block;margin-bottom:2px}
+
+@media(max-width:900px){
+  .quote-grid{grid-template-columns:1fr;gap:32px}
+  .form-row{grid-template-columns:1fr}
+}

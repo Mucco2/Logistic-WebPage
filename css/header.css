@@ -1,0 +1,102 @@
+/* ==========================================
+   HEADER / NAVIGATION
+   ========================================== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:90;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--gray-200);
+  transition:box-shadow .3s,background .3s;
+}
+.nav.scrolled{box-shadow:var(--shadow-sm);background:rgba(255,255,255,.98)}
+
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:70px;gap:16px
+}
+
+.nav-logo{
+  font-family:var(--font-display);font-weight:800;font-size:1.3rem;
+  display:flex;align-items:center;gap:10px;color:var(--blue)
+}
+.nav-logo .logo-mark{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-light));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 10px rgba(30,58,138,.25)
+}
+.nav-logo .logo-mark svg{color:var(--yellow)}
+.nav-logo-text{line-height:1.1}
+.nav-logo-text small{
+  display:block;font-family:var(--font-body);font-weight:500;
+  font-size:.65rem;letter-spacing:1.5px;color:var(--gray-500);text-transform:uppercase
+}
+
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{
+  font-size:.95rem;font-weight:500;color:var(--gray-700);
+  transition:color .2s;position:relative;padding:4px 0
+}
+.nav-links a:not(.nav-cta):hover{color:var(--blue)}
+.nav-links a:not(.nav-cta)::after{
+  content:'';position:absolute;bottom:-2px;left:0;right:100%;
+  height:2px;background:var(--yellow);transition:right .25s
+}
+.nav-links a:not(.nav-cta):hover::after{right:0}
+.nav-links a.active{color:var(--blue);font-weight:600}
+.nav-links a.active::after{right:0}
+
+.nav-cta{
+  background:var(--yellow);color:var(--gray-900) !important;
+  padding:10px 20px;border-radius:999px;font-weight:700;font-size:.9rem;
+  transition:transform .15s,background .2s;
+  display:inline-flex !important;align-items:center;gap:8px;
+}
+.nav-cta:hover{transform:translateY(-1px);background:var(--yellow-hover)}
+.nav-cta::after{display:none}
+
+.hamburger{
+  display:none;background:none;border:none;cursor:pointer;padding:8px;
+  border-radius:8px
+}
+.hamburger:hover{background:var(--gray-100)}
+.hamburger span{
+  display:block;width:24px;height:2.5px;background:var(--gray-900);
+  margin:5px 0;border-radius:2px;transition:all .3s
+}
+
+@media(max-width:900px){
+  .nav-links{
+    display:none;flex-direction:column;position:absolute;top:70px;left:0;right:0;
+    background:var(--white);padding:20px;gap:14px;box-shadow:var(--shadow-md);
+    border-top:1px solid var(--gray-200);
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{width:100%;padding:10px 0;border-bottom:1px solid var(--gray-100)}
+  .nav-links a:last-child{border-bottom:none}
+  .hamburger{display:block}
+  .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .hamburger.active span:nth-child(2){opacity:0}
+  .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+  .nav-cta{width:100%;justify-content:center}
+  .nav-logo-text small{display:none}
+}
+
+/* Top-bar (lille strip over nav med nøgle info - heuristik 1 og 6) */
+.topbar{
+  background:var(--blue-dark);color:var(--white);font-size:.82rem;
+  padding:7px 0
+}
+.topbar-inner{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap
+}
+.topbar-items{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.topbar-item{display:inline-flex;align-items:center;gap:6px;opacity:.9}
+.topbar-item svg{color:var(--yellow)}
+.topbar a{transition:color .2s}
+.topbar a:hover{color:var(--yellow)}
+
+@media(max-width:700px){
+  .topbar-items{justify-content:center;width:100%;gap:14px;font-size:.78rem}
+  .topbar-right{display:none}
+}

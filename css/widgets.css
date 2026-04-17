@@ -1,0 +1,143 @@
+/* ==========================================
+   FLOATING WIDGETS:
+   - phone float (mobil)
+   - WhatsApp knap
+   - Back to top
+   - Toast notifications
+   - Cookie consent
+   ========================================== */
+
+/* Flydende telefonbar (mobil) */
+.phone-float{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:80;
+  background:var(--yellow);padding:12px 18px;
+  box-shadow:0 -6px 24px rgba(0,0,0,.2)
+}
+.phone-float a{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  font-weight:700;font-size:1.05rem;color:var(--gray-900)
+}
+@media(max-width:900px){
+  .phone-float{display:block}
+  body{padding-bottom:70px}
+}
+
+/* WhatsApp flydende knap (desktop + mobil) */
+.whatsapp-float{
+  position:fixed;bottom:24px;right:24px;z-index:85;
+  background:#25D366;color:var(--white);
+  width:58px;height:58px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 24px rgba(37,211,102,.4);
+  transition:var(--transition);cursor:pointer
+}
+.whatsapp-float:hover{transform:scale(1.08);box-shadow:0 12px 30px rgba(37,211,102,.5)}
+.whatsapp-float::before{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  border:2px solid rgba(37,211,102,.4);
+  animation:whatsapp-pulse 2.5s infinite
+}
+@keyframes whatsapp-pulse{
+  0%{transform:scale(1);opacity:1}
+  100%{transform:scale(1.4);opacity:0}
+}
+.whatsapp-float .wa-label{
+  position:absolute;right:70px;background:var(--gray-900);color:var(--white);
+  padding:8px 14px;border-radius:8px;font-size:.85rem;font-weight:600;
+  white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s
+}
+.whatsapp-float:hover .wa-label{opacity:1}
+
+@media(max-width:900px){
+  .whatsapp-float{bottom:84px;right:16px;width:52px;height:52px}
+  .whatsapp-float .wa-label{display:none}
+}
+
+/* Back to top */
+.back-to-top{
+  position:fixed;bottom:24px;left:24px;z-index:85;
+  background:var(--blue);color:var(--white);
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:none;cursor:pointer;
+  box-shadow:var(--shadow-md);transition:var(--transition);
+  opacity:0;pointer-events:none;transform:translateY(10px)
+}
+.back-to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+.back-to-top:hover{background:var(--blue-dark);transform:translateY(-3px)}
+@media(max-width:900px){
+  .back-to-top{bottom:84px;left:16px;width:40px;height:40px}
+}
+
+/* Toast notifications (heuristik 1: systemstatus) */
+.toast-container{
+  position:fixed;top:90px;right:20px;z-index:300;
+  display:flex;flex-direction:column;gap:10px;
+  pointer-events:none
+}
+.toast{
+  background:var(--white);color:var(--gray-900);
+  padding:14px 18px;border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);
+  display:flex;align-items:center;gap:12px;
+  min-width:280px;max-width:360px;
+  border-left:4px solid var(--blue);
+  pointer-events:auto;
+  transform:translateX(380px);opacity:0;
+  transition:transform .3s,opacity .3s;
+  font-size:.92rem
+}
+.toast.show{transform:translateX(0);opacity:1}
+.toast.success{border-left-color:var(--green)}
+.toast.error{border-left-color:var(--red)}
+.toast-icon{flex-shrink:0}
+.toast.success .toast-icon{color:var(--green)}
+.toast.error .toast-icon{color:var(--red)}
+.toast-content strong{display:block;margin-bottom:2px;font-weight:700}
+.toast-close{
+  margin-left:auto;background:none;border:none;cursor:pointer;
+  color:var(--gray-500);padding:4px;font-size:1.1rem;line-height:1
+}
+.toast-close:hover{color:var(--gray-900)}
+
+@media(max-width:500px){
+  .toast-container{left:16px;right:16px;top:80px}
+  .toast{min-width:0;width:100%}
+}
+
+/* Cookie consent */
+.cookie-banner{
+  position:fixed;bottom:20px;left:20px;right:20px;z-index:250;
+  max-width:480px;margin:0 auto;
+  background:var(--white);
+  border:1px solid var(--gray-200);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-lg);
+  padding:20px 22px;
+  display:none;
+  animation:cookie-in .4s ease-out
+}
+.cookie-banner.show{display:block}
+@keyframes cookie-in{
+  from{transform:translateY(40px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+.cookie-banner h4{
+  font-family:var(--font-display);font-size:1rem;
+  margin-bottom:8px;color:var(--gray-900)
+}
+.cookie-banner p{font-size:.88rem;color:var(--gray-600);margin-bottom:14px;line-height:1.55}
+.cookie-actions{display:flex;gap:10px;flex-wrap:wrap}
+.cookie-actions button{
+  flex:1;min-width:120px;padding:10px 14px;
+  border-radius:var(--radius-sm);font-weight:600;font-size:.88rem;
+  cursor:pointer;border:none;transition:var(--transition)
+}
+.cookie-accept{background:var(--yellow);color:var(--gray-900)}
+.cookie-accept:hover{background:var(--yellow-hover)}
+.cookie-decline{background:var(--gray-100);color:var(--gray-700)}
+.cookie-decline:hover{background:var(--gray-200)}
+
+@media(max-width:900px){
+  .cookie-banner{bottom:100px}
+}

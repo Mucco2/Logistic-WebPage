@@ -1,0 +1,57 @@
+/* ==========================================
+   COVERAGE / FAHRGEBIETE
+   ========================================== */
+.coverage{
+  background:linear-gradient(135deg,var(--gray-900),var(--blue-dark));
+  color:var(--white);position:relative;overflow:hidden
+}
+.coverage::before{
+  content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;
+  background:radial-gradient(circle,rgba(251,191,36,.15),transparent 70%);
+  pointer-events:none
+}
+
+.coverage-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;
+  align-items:center;position:relative;z-index:1
+}
+
+.coverage-left .section-label{color:var(--yellow)}
+.coverage-left .section-label::before{background:var(--white)}
+.coverage-left h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.7rem,3vw,2.4rem);margin-bottom:14px;line-height:1.2
+}
+.coverage-left p{opacity:.9;margin-bottom:24px;font-size:1.02rem}
+
+.coverage-countries{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:8px;
+  margin-bottom:28px
+}
+.coverage-country{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  padding:10px 14px;border-radius:var(--radius-sm);
+  font-size:.9rem;transition:var(--transition)
+}
+.coverage-country:hover{
+  background:rgba(251,191,36,.14);
+  border-color:var(--yellow);transform:translateX(4px)
+}
+.coverage-flag{font-size:1.1rem}
+
+.coverage-map{
+  border-radius:var(--radius-lg);overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.12);
+  aspect-ratio:4/3;
+  background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+  position:relative
+}
+.coverage-map img{width:100%;height:100%;object-fit:cover}
+
+@media(max-width:900px){
+  .coverage-grid{grid-template-columns:1fr;gap:30px}
+  .coverage-countries{grid-template-columns:1fr 1fr}
+}

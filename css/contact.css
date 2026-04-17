@@ -1,0 +1,87 @@
+/* ==========================================
+   CONTACT / KONTAKT
+   ========================================== */
+.contact-strip{
+  padding:70px 0;background:var(--white);
+  border-top:1px solid var(--gray-200)
+}
+
+.contact-box{
+  display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;
+  background:linear-gradient(135deg,var(--yellow-light),var(--white));
+  border:1px solid var(--yellow);border-radius:var(--radius-lg);padding:36px;
+  box-shadow:var(--shadow-sm)
+}
+.contact-box h3{
+  font-family:var(--font-display);font-size:1.5rem;
+  margin-bottom:10px;color:var(--gray-900)
+}
+.contact-box p{color:var(--gray-600);font-size:.98rem;margin-bottom:18px}
+
+.contact-channels{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.contact-channel{
+  display:flex;align-items:center;gap:14px;
+  background:var(--white);
+  border:1px solid var(--gray-200);
+  border-radius:var(--radius-sm);padding:14px 16px;
+  transition:var(--transition)
+}
+.contact-channel:hover{
+  border-color:var(--blue);
+  transform:translateX(4px);
+  box-shadow:var(--shadow-sm)
+}
+.contact-channel-icon{
+  width:42px;height:42px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--white)
+}
+.contact-channel-icon.phone{background:var(--green)}
+.contact-channel-icon.whatsapp{background:#25D366}
+.contact-channel-icon.email{background:var(--blue)}
+.contact-channel-label{font-size:.78rem;color:var(--gray-500);font-weight:500}
+.contact-channel-value{font-weight:700;color:var(--gray-900);font-size:1.02rem}
+
+.simple-form{background:var(--white);padding:24px;border-radius:var(--radius);border:1px solid var(--gray-200)}
+.simple-form label{display:block;font-size:.86rem;font-weight:600;margin:10px 0 6px;color:var(--gray-800)}
+.simple-form label:first-child{margin-top:0}
+.simple-form input{
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--gray-200);
+  border-radius:var(--radius-sm);font-size:.95rem;
+  font-family:var(--font-body);transition:border-color .2s
+}
+.simple-form input:focus{outline:none;border-color:var(--blue)}
+.simple-form input.error{border-color:var(--red);background:#fef2f2}
+.simple-form .error-msg{display:none;color:var(--red);font-size:.82rem;margin-top:4px}
+.simple-form .error-msg.show{display:block}
+.simple-form button{
+  width:100%;margin-top:14px;background:var(--blue);color:var(--white);
+  border:none;border-radius:var(--radius-sm);padding:13px 14px;
+  font-weight:700;font-size:.98rem;cursor:pointer;transition:var(--transition);
+  display:flex;align-items:center;justify-content:center;gap:8px
+}
+.simple-form button:hover{background:var(--blue-dark)}
+.simple-form button:disabled{opacity:.7;cursor:not-allowed}
+
+@media(max-width:900px){
+  .contact-box{grid-template-columns:1fr;padding:26px}
+}
+
+/* Trust strip */
+.trust{
+  padding:54px 0;background:var(--white);
+  border-top:1px solid var(--gray-200);
+  border-bottom:1px solid var(--gray-200)
+}
+.trust-inner{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:28px;align-items:center
+}
+.trust-item{text-align:center;padding:10px}
+.trust-item .num{
+  font-family:var(--font-display);font-weight:800;
+  font-size:2.2rem;color:var(--blue);line-height:1
+}
+.trust-item .label{font-size:.85rem;color:var(--gray-600);margin-top:6px}
+
+@media(max-width:700px){.trust-inner{grid-template-columns:1fr 1fr;gap:22px}}
