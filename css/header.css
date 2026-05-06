@@ -73,14 +73,16 @@
 .nav-links a.active{color:var(--blue);font-weight:600}
 .nav-links a.active::after{right:0}
 
-.nav-cta{
+.nav-links a.nav-cta{
   background:var(--yellow);color:var(--gray-900) !important;
-  padding:10px 20px;border-radius:999px;font-weight:700;font-size:.9rem;
+  min-height:40px;
+  padding:10px 24px;border-radius:999px;font-weight:600;font-size:.85rem;
   transition:transform .15s,background .2s;
-  display:inline-flex !important;align-items:center;gap:8px;
+  display:inline-flex !important;align-items:center;justify-content:center;gap:8px;
+  white-space:nowrap;
 }
-.nav-cta:hover{transform:translateY(-1px);background:var(--yellow-hover)}
-.nav-cta::after{display:none}
+.nav-links a.nav-cta:hover{transform:translateY(-1px);background:var(--yellow-hover)}
+.nav-links a.nav-cta::after{display:none}
 
 .hamburger{
   display:none;background:none;border:none;cursor:pointer;padding:8px;
@@ -105,7 +107,7 @@
   .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
   .hamburger.active span:nth-child(2){opacity:0}
   .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-  .nav-cta{width:100%;justify-content:center}
+  .nav-links a.nav-cta{width:100%;justify-content:center}
   .nav-logo{font-size:1.12rem}
   .nav-logo-img{width:44px;height:44px}
   .nav-logo-name{font-size:1.18rem}
