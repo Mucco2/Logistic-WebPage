@@ -16,36 +16,39 @@
 
   // Hamburger toggle
   if(hamburger && navLinks){
-    hamburger.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
+    const setMenuOpen = (open, restoreFocus = false) => {
+      navLinks.classList.toggle('open', open);
       hamburger.classList.toggle('active', open);
       hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      hamburger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+      if(restoreFocus) hamburger.focus();
+    };
+
+    setMenuOpen(navLinks.classList.contains('open'));
+
+    hamburger.addEventListener('click', () => {
+      setMenuOpen(!navLinks.classList.contains('open'));
     });
     navLinks.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('open');
-        hamburger.setAttribute('aria-expanded','false');
+        setMenuOpen(false);
       });
     });
+
+    // Luk menu ved klik uden for
+    document.addEventListener('click', (e) => {
+      if(!navLinks.classList.contains('open')) return;
+      if(nav.contains(e.target)) return;
+      setMenuOpen(false);
+    });
+
+    // ESC lukker menu (heuristik 3: brugerkontrol)
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && navLinks.classList.contains('open')){
+        setMenuOpen(false, true);
+      }
+    });
   }
-
-  // Luk menu ved klik uden for
-  document.addEventListener('click', (e) => {
-    if(!navLinks?.classList.contains('open')) return;
-    if(nav.contains(e.target)) return;
-    navLinks.classList.remove('open');
-    hamburger?.classList.remove('active');
-  });
-
-  // ESC lukker menu (heuristik 3: brugerkontrol)
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape' && navLinks?.classList.contains('open')){
-      navLinks.classList.remove('open');
-      hamburger?.classList.remove('active');
-      hamburger?.focus();
-    }
-  });
 
   // Aktivt link baseret på scroll-position
   const links = navLinks ? Array.from(navLinks.querySelectorAll('a[href^="#"]')) : [];

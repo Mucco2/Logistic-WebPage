@@ -4,7 +4,6 @@
    - WhatsApp knap
    - Back to top
    - Toast notifications
-   - Cookie consent
    ========================================== */
 
 /* Flydende telefonbar (mobil) */
@@ -49,8 +48,7 @@
 .whatsapp-float:hover .wa-label{opacity:1}
 
 @media(max-width:900px){
-  .whatsapp-float{bottom:84px;right:16px;width:52px;height:52px}
-  .whatsapp-float .wa-label{display:none}
+  .whatsapp-float{display:none}
 }
 
 /* Back to top */
@@ -103,41 +101,4 @@
 @media(max-width:500px){
   .toast-container{left:16px;right:16px;top:80px}
   .toast{min-width:0;width:100%}
-}
-
-/* Cookie consent */
-.cookie-banner{
-  position:fixed;bottom:20px;left:20px;right:20px;z-index:250;
-  max-width:480px;margin:0 auto;
-  background:var(--white);
-  border:1px solid var(--gray-200);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow-lg);
-  padding:20px 22px;
-  display:none;
-  animation:cookie-in .4s ease-out
-}
-.cookie-banner.show{display:block}
-@keyframes cookie-in{
-  from{transform:translateY(40px);opacity:0}
-  to{transform:translateY(0);opacity:1}
-}
-.cookie-banner h4{
-  font-family:var(--font-display);font-size:1rem;
-  margin-bottom:8px;color:var(--gray-900)
-}
-.cookie-banner p{font-size:.88rem;color:var(--gray-600);margin-bottom:14px;line-height:1.55}
-.cookie-actions{display:flex;gap:10px;flex-wrap:wrap}
-.cookie-actions button{
-  flex:1;min-width:120px;padding:10px 14px;
-  border-radius:var(--radius-sm);font-weight:600;font-size:.88rem;
-  cursor:pointer;border:none;transition:var(--transition)
-}
-.cookie-accept{background:var(--yellow);color:var(--gray-900)}
-.cookie-accept:hover{background:var(--yellow-hover)}
-.cookie-decline{background:var(--gray-100);color:var(--gray-700)}
-.cookie-decline:hover{background:var(--gray-200)}
-
-@media(max-width:900px){
-  .cookie-banner{bottom:100px}
 }

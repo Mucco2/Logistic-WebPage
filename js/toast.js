@@ -23,9 +23,11 @@
     const {type='success', title='', message='', duration=4500} = typeof opts === 'string' ? {message:opts} : opts;
     const el = document.createElement('div');
     el.className = `toast ${type}`;
-    el.setAttribute('role','status');
+    el.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    el.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
+    el.setAttribute('aria-atomic', 'true');
     el.innerHTML = `
-      <span class="toast-icon">${ICONS[type] || ICONS.info}</span>
+      <span class="toast-icon" aria-hidden="true">${ICONS[type] || ICONS.info}</span>
       <div class="toast-content">
         ${title ? `<strong>${title}</strong>` : ''}
         <span>${message}</span>

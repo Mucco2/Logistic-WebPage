@@ -60,7 +60,7 @@
 
 /* BLOG-POST-SIDE */
 .blog-hero{
-  padding:140px 0 70px;
+  padding:70px 0;
   background:linear-gradient(135deg,var(--blue-dark),var(--blue));
   color:var(--white)
 }

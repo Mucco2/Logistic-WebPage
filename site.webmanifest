@@ -1,0 +1,26 @@
+{
+  "name": "ARAM Transport",
+  "short_name": "ARAM",
+  "description": "Transport- und Umzugsleistungen ab Deutschland zu vereinbarten Zielen in Europa.",
+  "lang": "de-DE",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "minimal-ui",
+  "background_color": "#ffffff",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

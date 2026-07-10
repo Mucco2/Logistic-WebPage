@@ -2,7 +2,7 @@
    HEADER / NAVIGATION
    ========================================== */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:90;
+  position:sticky;top:0;left:0;right:0;z-index:90;
   background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid var(--gray-200);
@@ -130,6 +130,5 @@
 .topbar a:hover{color:var(--yellow)}
 
 @media(max-width:700px){
-  .topbar-items{justify-content:center;width:100%;gap:14px;font-size:.78rem}
-  .topbar-right{display:none}
+  .topbar{display:none}
 }

@@ -2,10 +2,10 @@
    HERO
    ========================================== */
 .hero{
-  padding:160px 0 100px;
+  padding:90px 0 100px;
   background:
     linear-gradient(135deg,rgba(18,37,95,.92) 0%,rgba(30,58,138,.88) 55%,rgba(43,79,186,.85) 100%),
-    url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1600&q=70') center/cover;
+    url('../Vito1.jpg') center/cover;
   color:var(--white);position:relative;overflow:hidden;
 }
 .hero::before{
@@ -126,7 +126,7 @@
 }
 
 @media(max-width:900px){
-  .hero{padding:130px 0 70px}
+  .hero{padding:70px 0}
   .hero-grid{grid-template-columns:1fr;gap:30px}
   .hero-truck-badge{display:none}
 }

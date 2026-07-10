@@ -10,6 +10,8 @@
   };
   const EMAILJS_SDK_SRC = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
   let emailJsReady;
+  let errorId = 0;
+  const submittingForms = new WeakSet();
 
   function loadEmailJs(){
     if(emailJsReady) return emailJsReady;
@@ -53,6 +55,11 @@
     if(!field) return '';
     if(field.type === 'checkbox') return field.checked ? 'Ja' : 'Nein';
     return field.value.trim();
+  }
+
+  function hasFilledHoneypot(form){
+    const honeypot = form.querySelector('[name="website"]');
+    return Boolean(honeypot && honeypot.value.trim());
   }
 
   function serviceLabel(value){
@@ -185,20 +192,89 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v || '');
   }
 
-  function setError(group, msg){
+  function associateError(field, err){
+    if(!field || !err) return;
+
+    if(!err.id){
+      const baseId = field.id ? `${field.id}-error` : `form-error-${++errorId}`;
+      let candidate = baseId;
+      while(document.getElementById(candidate) && document.getElementById(candidate) !== err){
+        candidate = `${baseId}-${++errorId}`;
+      }
+      err.id = candidate;
+    }
+
+    const describedBy = new Set((field.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+    describedBy.add(err.id);
+    field.setAttribute('aria-describedby', Array.from(describedBy).join(' '));
+    err.setAttribute('role', 'alert');
+    err.setAttribute('aria-atomic', 'true');
+  }
+
+  function updateErrorMessage(err, msg){
+    const textTarget = err.querySelector('span');
+    if(textTarget) textTarget.textContent = msg;
+    else err.textContent = msg;
+  }
+
+  function setError(group, msg, field){
+    if(!group) return;
     group.classList.add('has-error');
-    let err = group.querySelector('.form-error, .error-msg');
+    const input = field || group.querySelector('input,select,textarea');
+    const err = group.querySelector('.form-error, .error-msg');
+    if(input){
+      input.classList.add('error');
+      input.setAttribute('aria-invalid', 'true');
+    }
     if(err){
-      err.textContent = msg;
+      associateError(input, err);
+      updateErrorMessage(err, msg);
       err.classList.add('show');
     }
   }
   function clearError(group){
+    if(!group) return;
     group.classList.remove('has-error');
     const err = group.querySelector('.form-error, .error-msg');
     if(err) err.classList.remove('show');
-    const input = group.querySelector('input,select,textarea');
-    if(input) input.classList.remove('error');
+    const input = group.querySelector('[aria-invalid], input:not([type="hidden"]), select, textarea');
+    if(input){
+      input.classList.remove('error');
+      input.setAttribute('aria-invalid', 'false');
+    }
+  }
+
+  function getLiveRegion(form){
+    let region = form.querySelector('.js-form-live-region');
+    if(region) return region;
+
+    region = document.createElement('div');
+    region.className = 'js-form-live-region';
+    region.setAttribute('role', 'status');
+    region.setAttribute('aria-live', 'polite');
+    region.setAttribute('aria-atomic', 'true');
+    Object.assign(region.style, {
+      position: 'absolute',
+      width: '1px',
+      height: '1px',
+      padding: '0',
+      margin: '-1px',
+      overflow: 'hidden',
+      clip: 'rect(0, 0, 0, 0)',
+      clipPath: 'inset(50%)',
+      whiteSpace: 'nowrap',
+      border: '0'
+    });
+    form.appendChild(region);
+    return region;
+  }
+
+  function announce(form, message){
+    const region = getLiveRegion(form);
+    region.textContent = '';
+    const update = () => { region.textContent = message; };
+    if(window.requestAnimationFrame) window.requestAnimationFrame(update);
+    else setTimeout(update, 0);
   }
 
   // Quote form (stor)
@@ -208,12 +284,41 @@
     // Live-rydning
     groups.forEach(g => {
       const input = g.querySelector('input,select,textarea');
-      if(input) input.addEventListener('input', () => clearError(g));
+      const err = g.querySelector('.form-error, .error-msg');
+      if(input){
+        input.setAttribute('aria-invalid', 'false');
+        if(err) associateError(input, err);
+        input.addEventListener('input', () => clearError(g));
+        input.addEventListener('change', () => clearError(g));
+      }
     });
 
     quoteForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if(submittingForms.has(quoteForm)) return;
+
+      if(hasFilledHoneypot(quoteForm)){
+        const success = document.getElementById('quoteSuccess');
+        if(success){
+          success.setAttribute('role', 'status');
+          success.setAttribute('aria-live', 'polite');
+          success.setAttribute('aria-atomic', 'true');
+          success.classList.add('show');
+        }
+        quoteForm.reset();
+        groups.forEach(clearError);
+        announce(quoteForm, 'Ihre Anfrage wurde erfolgreich gesendet.');
+        window.showToast && window.showToast({
+          type:'success',
+          title:'Anfrage gesendet',
+          message:'Wir melden uns innerhalb von 24 Stunden bei Ihnen.'
+        });
+        return;
+      }
+
+      groups.forEach(clearError);
       let valid = true;
+      const invalidFields = [];
       const name = quoteForm.querySelector('[name="name"]');
       const phone = quoteForm.querySelector('[name="phone"]');
       const email = quoteForm.querySelector('[name="email"]');
@@ -222,99 +327,180 @@
       const service = quoteForm.querySelector('[name="service"]');
       const consent = quoteForm.querySelector('[name="consent"]');
 
-      if(!name.value.trim()){ setError(name.closest('.form-group'),'Bitte geben Sie Ihren Namen ein.'); valid=false; }
-      if(!isValidPhone(phone.value)){ setError(phone.closest('.form-group'),'Bitte gültige Telefonnummer eingeben.'); valid=false; }
-      if(email && email.value.trim() && !isValidEmail(email.value)){ setError(email.closest('.form-group'),'Bitte gültige E-Mail-Adresse eingeben.'); valid=false; }
-      if(!from.value.trim()){ setError(from.closest('.form-group'),'Bitte Abholort angeben.'); valid=false; }
-      if(!to.value.trim()){ setError(to.closest('.form-group'),'Bitte Zielort angeben.'); valid=false; }
-      if(service && !service.value){ setError(service.closest('.form-group'),'Bitte wählen Sie eine Leistung.'); valid=false; }
+      const invalidate = (field, message) => {
+        valid = false;
+        if(!field) return;
+        invalidFields.push(field);
+        setError(field.closest('.form-group'), message, field);
+      };
+
+      if(!name?.value.trim()) invalidate(name, 'Bitte geben Sie Ihren Namen ein.');
+      if(!phone || !isValidPhone(phone.value)) invalidate(phone, 'Bitte gültige Telefonnummer eingeben.');
+      if(email && email.value.trim() && !isValidEmail(email.value)) invalidate(email, 'Bitte gültige E-Mail-Adresse eingeben.');
+      if(!from?.value.trim()) invalidate(from, 'Bitte Abholort angeben.');
+      if(!to?.value.trim()) invalidate(to, 'Bitte Zielort angeben.');
+      if(service && !service.value) invalidate(service, 'Bitte wählen Sie eine Leistung.');
       if(consent && !consent.checked){
-        const g = consent.closest('.form-group');
-        if(g){ setError(g,'Bitte Datenschutz bestätigen.'); valid=false; }
+        invalidate(consent, 'Bitte Datenschutz bestätigen.');
       }
 
       if(!valid){
-        window.showToast && showToast({type:'error', title:'Bitte prüfen Sie Ihre Eingaben', message:'Einige Felder sind unvollständig.'});
-        const firstError = quoteForm.querySelector('.has-error input, .has-error select, .has-error textarea');
-        firstError && firstError.focus();
+        announce(quoteForm, 'Bitte prüfen Sie die markierten Formularfelder.');
+        window.showToast && window.showToast({type:'error', title:'Bitte prüfen Sie Ihre Eingaben', message:'Einige Felder sind unvollständig.'});
+        invalidFields[0]?.focus();
         return;
       }
 
       // EmailJS sender feedback (heuristik 1)
       const btn = quoteForm.querySelector('.form-submit');
-      const originalText = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = '<span>Wird gesendet…</span>';
+      const originalText = btn ? btn.innerHTML : '';
+      submittingForms.add(quoteForm);
+      quoteForm.setAttribute('aria-busy', 'true');
+      if(btn){
+        btn.disabled = true;
+        btn.setAttribute('aria-disabled', 'true');
+        btn.innerHTML = '<span>Wird gesendet…</span>';
+      }
+      announce(quoteForm, 'Ihre Anfrage wird gesendet.');
 
       try{
         await sendEmail(buildQuoteParams(quoteForm));
         const success = document.getElementById('quoteSuccess');
-        if(success) success.classList.add('show');
+        if(success){
+          success.setAttribute('role', 'status');
+          success.setAttribute('aria-live', 'polite');
+          success.setAttribute('aria-atomic', 'true');
+          success.classList.add('show');
+        }
         quoteForm.reset();
-        window.showToast && showToast({
+        groups.forEach(clearError);
+        announce(quoteForm, 'Ihre Anfrage wurde erfolgreich gesendet.');
+        window.showToast && window.showToast({
           type:'success',
           title:'Anfrage gesendet',
           message:'Wir melden uns innerhalb von 24 Stunden bei Ihnen.'
         });
       }catch(error){
         console.error('EmailJS send failed:', error);
-        window.showToast && showToast({
+        announce(quoteForm, 'Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder rufen Sie uns an.');
+        window.showToast && window.showToast({
           type:'error',
           title:'Senden fehlgeschlagen',
           message:'Bitte versuchen Sie es erneut oder rufen Sie uns direkt an.'
         });
       }finally{
-        btn.disabled = false;
-        btn.innerHTML = originalText;
+        submittingForms.delete(quoteForm);
+        quoteForm.setAttribute('aria-busy', 'false');
+        if(btn){
+          btn.disabled = false;
+          btn.removeAttribute('aria-disabled');
+          btn.innerHTML = originalText;
+        }
       }
     });
   }
 
   // Simple forms (callback + contact-strip)
   document.querySelectorAll('.js-simple-form').forEach(form => {
+    const input = form.querySelector('input[type="tel"]');
+    if(!input) return;
+    const group = input.closest('.form-group, .simple-form, label') || input.parentElement;
+    const existingError = group?.querySelector('.error-msg, .form-error');
+    input.setAttribute('aria-invalid', 'false');
+    if(existingError) associateError(input, existingError);
+    input.addEventListener('input', () => clearError(group));
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const input = form.querySelector('input[type="tel"]');
-      const group = input.closest('.form-group, .simple-form, label') || input.parentElement;
+      if(submittingForms.has(form)) return;
+
+      const btn = form.querySelector('button[type="submit"], button:not([type])');
+      const original = btn ? btn.innerHTML : '';
+
+      if(hasFilledHoneypot(form)){
+        submittingForms.add(form);
+        form.setAttribute('aria-busy', 'true');
+        form.reset();
+        clearError(group);
+        if(btn){
+          btn.disabled = true;
+          btn.setAttribute('aria-disabled', 'true');
+          btn.innerHTML = '<span>✓ Erhalten</span>';
+        }
+        announce(form, 'Ihr Rückruf wurde erfolgreich angefragt.');
+        window.showToast && window.showToast({
+          type:'success',
+          title:'Rückruf angefragt',
+          message:'Wir rufen Sie in Kürze zurück.'
+        });
+        setTimeout(() => {
+          submittingForms.delete(form);
+          form.setAttribute('aria-busy', 'false');
+          if(btn){
+            btn.disabled = false;
+            btn.removeAttribute('aria-disabled');
+            btn.innerHTML = original;
+          }
+        }, 2600);
+        return;
+      }
 
       if(!isValidPhone(input.value)){
         input.classList.add('error');
-        let err = group.querySelector('.error-msg');
+        let err = group?.querySelector('.error-msg, .form-error');
         if(!err){
           err = document.createElement('div');
           err.className = 'error-msg';
           input.insertAdjacentElement('afterend', err);
         }
-        err.textContent = 'Bitte gültige Telefonnummer eingeben.';
-        err.classList.add('show');
-        window.showToast && showToast({type:'error', message:'Ungültige Telefonnummer.'});
+        associateError(input, err);
+        setError(group, 'Bitte gültige Telefonnummer eingeben.', input);
+        announce(form, 'Bitte geben Sie eine gültige Telefonnummer ein.');
+        window.showToast && window.showToast({type:'error', message:'Ungültige Telefonnummer.'});
         input.focus();
         return;
       }
 
-      const btn = form.querySelector('button');
-      const original = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = '<span>Wird gesendet…</span>';
+      clearError(group);
+      submittingForms.add(form);
+      form.setAttribute('aria-busy', 'true');
+      if(btn){
+        btn.disabled = true;
+        btn.setAttribute('aria-disabled', 'true');
+        btn.innerHTML = '<span>Wird gesendet…</span>';
+      }
+      announce(form, 'Ihre Rückrufanfrage wird gesendet.');
 
       try{
         await sendEmail(buildCallbackParams(form));
-        btn.innerHTML = '<span>✓ Erhalten</span>';
-        window.showToast && showToast({
+        if(btn) btn.innerHTML = '<span>✓ Erhalten</span>';
+        announce(form, 'Ihr Rückruf wurde erfolgreich angefragt.');
+        window.showToast && window.showToast({
           type:'success',
           title:'Rückruf angefragt',
           message:'Wir rufen Sie in Kürze zurück.'
         });
         input.value = '';
         setTimeout(() => {
-          btn.disabled = false;
-          btn.innerHTML = original;
+          submittingForms.delete(form);
+          form.setAttribute('aria-busy', 'false');
+          if(btn){
+            btn.disabled = false;
+            btn.removeAttribute('aria-disabled');
+            btn.innerHTML = original;
+          }
         }, 2600);
       }catch(error){
         console.error('EmailJS callback send failed:', error);
-        btn.disabled = false;
-        btn.innerHTML = original;
-        window.showToast && showToast({
+        submittingForms.delete(form);
+        form.setAttribute('aria-busy', 'false');
+        if(btn){
+          btn.disabled = false;
+          btn.removeAttribute('aria-disabled');
+          btn.innerHTML = original;
+        }
+        announce(form, 'Ihre Rückrufanfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder rufen Sie uns an.');
+        window.showToast && window.showToast({
           type:'error',
           title:'Senden fehlgeschlagen',
           message:'Bitte versuchen Sie es erneut oder rufen Sie uns direkt an.'

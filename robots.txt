@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /LAUNCH-CHECKLIST.md
+
+Sitemap: https://lw-transport.de/sitemap.xml

@@ -1,5 +1,5 @@
 /* ========================================
-   UI: animationer, back-to-top, lightbox, cookie, tæller
+   UI: animationer, back-to-top, lightbox, tæller
    ======================================== */
 (function(){
 
@@ -32,53 +32,99 @@
     const lbCaption = lightbox.querySelector('.lightbox-caption');
     const lbClose = lightbox.querySelector('.lightbox-close');
 
-    document.querySelectorAll('.gallery-item').forEach(item => {
-      item.addEventListener('click', () => {
+    if(lbImg && lbCaption && lbClose){
+      let opener = null;
+      let previousBodyOverflow = '';
+      const captionId = lbCaption.id || 'lightbox-caption';
+
+      lbCaption.id = captionId;
+      lightbox.setAttribute('aria-modal', 'true');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightbox.setAttribute('aria-describedby', captionId);
+
+      const focusCloseButton = () => {
+        try{
+          lbClose.focus({preventScroll:true});
+        }catch(error){
+          lbClose.focus();
+        }
+      };
+
+      const open = (item) => {
         const img = item.querySelector('img');
         if(!img) return;
-        lbImg.src = img.src;
+
+        opener = item;
+        previousBodyOverflow = document.body.style.overflow;
+        lbImg.src = img.currentSrc || img.src;
         lbImg.alt = img.alt || '';
-        lbCaption.textContent = img.alt || '';
+        lbCaption.textContent = img.alt || 'Vergrößerte Bildansicht';
         lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        requestAnimationFrame(() => {
+          if(lightbox.classList.contains('open')) focusCloseButton();
+        });
+      };
+
+      const close = () => {
+        if(!lightbox.classList.contains('open')) return;
+        const elementToFocus = opener;
+        opener = null;
+        if(elementToFocus?.isConnected){
+          try{
+            elementToFocus.focus({preventScroll:true});
+          }catch(error){
+            elementToFocus.focus();
+          }
+        }else{
+          lbClose.blur();
+        }
+
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = previousBodyOverflow;
+      };
+
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        const img = item.querySelector('img');
+        if(!img) return;
+
+        if(!item.hasAttribute('tabindex')) item.setAttribute('tabindex','0');
+        if(!item.hasAttribute('role')) item.setAttribute('role','button');
+        item.setAttribute('aria-haspopup', 'dialog');
+        if(!item.hasAttribute('aria-label')){
+          item.setAttribute('aria-label', `Bild vergrößern: ${img.alt || 'Galeriebild'}`);
+        }
+
+        item.addEventListener('click', () => open(item));
+        item.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            open(item);
+          }
+        });
       });
-      item.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter' || e.key === ' '){
+
+      lbClose.addEventListener('click', close);
+      lightbox.addEventListener('click', (e) => {
+        if(e.target === lightbox) close();
+      });
+      document.addEventListener('keydown', (e) => {
+        if(!lightbox.classList.contains('open')) return;
+
+        if(e.key === 'Escape'){
           e.preventDefault();
-          item.click();
+          close();
+          return;
+        }
+
+        if(e.key === 'Tab'){
+          e.preventDefault();
+          focusCloseButton();
         }
       });
-      item.setAttribute('tabindex','0');
-      item.setAttribute('role','button');
-    });
-
-    const close = () => {
-      lightbox.classList.remove('open');
-      document.body.style.overflow = '';
-    };
-    lbClose.addEventListener('click', close);
-    lightbox.addEventListener('click', (e) => {
-      if(e.target === lightbox) close();
-    });
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape' && lightbox.classList.contains('open')) close();
-    });
-  }
-
-  /* Cookie consent */
-  const cookie = document.getElementById('cookieBanner');
-  if(cookie){
-    if(!localStorage.getItem('lw_cookie_choice')){
-      setTimeout(() => cookie.classList.add('show'), 1200);
     }
-    cookie.querySelector('.cookie-accept')?.addEventListener('click', () => {
-      localStorage.setItem('lw_cookie_choice','accepted');
-      cookie.classList.remove('show');
-    });
-    cookie.querySelector('.cookie-decline')?.addEventListener('click', () => {
-      localStorage.setItem('lw_cookie_choice','declined');
-      cookie.classList.remove('show');
-    });
   }
 
   /* Count-up ved trust-tal */

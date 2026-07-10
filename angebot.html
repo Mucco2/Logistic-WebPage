@@ -11,9 +11,14 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="manifest" href="site.webmanifest">
+<link rel="canonical" href="https://lw-transport.de/angebot.html">
+<meta property="og:title" content="Angebot anfordern – ARAM | Kostenfreie Transportanfrage">
+<meta property="og:description" content="Jetzt kostenfrei ein Angebot für Privatumzug, Firmentransport oder Paketzustellung von Deutschland nach Europa anfordern. Antwort in der Regel innerhalb von 24 Stunden.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lw-transport.de/angebot.html">
+<meta property="og:locale" content="de_DE">
+<meta property="og:image" content="https://lw-transport.de/Vito1.jpg">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/footer.css">
@@ -47,8 +52,8 @@
 
 <nav class="nav" id="nav" aria-label="Hauptnavigation">
   <div class="container nav-inner">
-    <a href="index.html" class="nav-logo" aria-label="Aram Transport Startseite">
-      <img src="Aramlogo.png" alt="Aram Transport Logo" class="nav-logo-img">
+    <a href="index.html" class="nav-logo" aria-label="ARAM Transport Startseite">
+      <img src="Aramlogo.png" alt="ARAM Transport Logo" class="nav-logo-img">
       <span class="nav-logo-text">
         <span class="nav-logo-name">ARAM</span>
         <span class="nav-logo-subtitle">Transport</span>
@@ -92,7 +97,7 @@
 
 <section class="page-feature-image">
   <div class="container">
-    <img src="Vito4.jpg" alt="ARAM Transportfahrzeug für eine Angebotsanfrage nach Europa" loading="lazy">
+    <img src="Vito1.jpg" alt="Weißer ARAM-Transporter für europaweite Transportanfragen" loading="lazy">
   </div>
 </section>
 
@@ -100,20 +105,20 @@
   <div class="container">
     <div class="trust-inner">
       <div class="trust-item">
-        <div class="num count-up" data-target="24" data-suffix="h">0h</div>
+        <div class="num">24 h</div>
         <div class="label">Antwortzeit im Regelfall</div>
       </div>
       <div class="trust-item">
-        <div class="num">3,5t</div>
-        <div class="label">Kapazität pro Fahrzeugklasse</div>
+        <div class="num">3,5 t</div>
+        <div class="label">Zulässige Gesamtmasse je Fahrzeug</div>
       </div>
       <div class="trust-item">
-        <div class="num count-up" data-target="11" data-suffix="+">0+</div>
-        <div class="label">Regelmäßige EU-Zielländer</div>
+        <div class="num">Europa</div>
+        <div class="label">Ausgewählte Zielländer</div>
       </div>
       <div class="trust-item">
-        <div class="num count-up" data-target="500" data-suffix="+">0+</div>
-        <div class="label">Erfolgreiche Transporte</div>
+        <div class="num">Direkt</div>
+        <div class="label">Persönlicher Ansprechpartner</div>
       </div>
     </div>
   </div>
@@ -124,22 +129,23 @@
     <div class="quote-grid">
       <div class="quote-left">
         <div class="section-label" style="color:var(--yellow)">Anfrage starten</div>
-        <h2>In wenigen Angaben zum realistischen Festpreis</h2>
-        <p>Je genauer Ihre Angaben sind, desto präziser wird unser Angebot. Nutzen Sie das Formular für alle Transportarten ab Deutschland in die EU.</p>
+        <h2>In wenigen Angaben zum realistischen Angebot</h2>
+        <p>Je genauer Ihre Angaben sind, desto präziser wird unser Angebot. Nutzen Sie das Formular für Transportanfragen ab Deutschland in ausgewählte Länder Europas.</p>
         <ul class="quote-benefits">
           <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Persönliche Rückmeldung statt anonymer Hotline</li>
           <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Transparenter Preis ohne versteckte Zusatzkosten</li>
-          <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Abholung nur in Deutschland, Lieferung in die EU</li>
+          <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Abholung nur in Deutschland, Lieferung in ausgewählte Länder Europas</li>
           <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Auf Wunsch mit Möbelmontage, Trageservice oder Direktfahrt</li>
         </ul>
       </div>
 
       <form class="quote-form" id="quoteForm" novalidate>
+        <div class="form-honeypot" aria-hidden="true"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
         <div class="form-success" id="quoteSuccess">
           <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
           <div class="form-success-content">
             <strong>Anfrage erfolgreich übermittelt</strong>
-            Wir melden uns innerhalb von 24 Stunden mit einem Angebot oder Rückfragen.
+            Wir melden uns in der Regel innerhalb von 24 Stunden mit einem Angebot oder Rückfragen.
           </div>
         </div>
 
@@ -190,7 +196,7 @@
         <div class="form-row">
           <div class="form-group">
             <label for="quote-date">Wunschtermin</label>
-            <input id="quote-date" name="date" type="text" placeholder="z. B. Anfang Mai 2026">
+            <input id="quote-date" name="date" type="text" placeholder="z. B. TT.MM.JJJJ oder gewünschter Zeitraum">
           </div>
           <div class="form-group">
             <label for="quote-volume">Umfang / Gewicht</label>
@@ -203,13 +209,7 @@
           <textarea id="quote-message" name="message" placeholder="Beschreiben Sie kurz Möbel, Anzahl der Kartons, Etagen, Montagewunsch oder besondere Anforderungen."></textarea>
         </div>
 
-        <div class="form-group">
-          <label style="display:flex;align-items:flex-start;gap:10px;margin-bottom:0">
-            <input type="checkbox" name="consent" style="width:auto;margin-top:3px">
-            <span>Ich stimme zu, dass meine Angaben zur Bearbeitung meiner Anfrage verwendet werden. <span class="req">*</span></span>
-          </label>
-          <div class="form-error">Bitte Datenschutz bestätigen.</div>
-        </div>
+        <p class="form-hint">Wir verwenden Ihre Angaben ausschließlich zur Bearbeitung Ihrer Anfrage. <a href="datenschutz.html">Datenschutzhinweise</a></p>
 
         <button type="submit" class="form-submit">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2z"/></svg>
@@ -231,7 +231,7 @@
 
           <h2>Typische Angaben für eine schnelle Bearbeitung</h2>
           <ul>
-            <li>Abholadresse in Deutschland und Zieladresse in der EU</li>
+            <li>Abholadresse in Deutschland und Zieladresse in einem angebotenen europäischen Zielland</li>
             <li>Art der Leistung: Privatumzug, B2B-Transport oder Direktzustellung</li>
             <li>Geschätzter Umfang: Kartons, Möbel, Paletten oder Einzelstücke</li>
             <li>Wunschtermin oder gewünschter Zeitraum</li>
@@ -245,7 +245,7 @@
 
           <h2>Für wen ist die Angebotsseite gedacht?</h2>
           <ul>
-            <li>Privatkunden mit Umzug oder Teilumzug ins EU-Ausland</li>
+            <li>Privatkunden mit Umzug oder Teilumzug in ein angebotenes europäisches Zielland</li>
             <li>Unternehmen mit regelmäßigen B2B-Lieferungen oder Büroumzügen</li>
             <li>Kunden mit sensiblen Einzelstücken, die nicht über Standard-Paketdienste laufen sollen</li>
             <li>Personen, die zunächst nur einen Preisrahmen oder eine Machbarkeitsprüfung brauchen</li>
@@ -263,7 +263,7 @@
           </a>
           <div class="sidebar-note">Mo–Sa 07:00–20:00</div>
           <ul class="sidebar-list">
-            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Antwort innerhalb von 24 Stunden</li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Antwort in der Regel innerhalb von 24 Stunden</li>
             <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Transparentes Angebot</li>
             <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Persönliche Betreuung</li>
           </ul>
@@ -301,6 +301,7 @@
         </div>
       </div>
       <form class="simple-form js-simple-form" novalidate>
+        <div class="form-honeypot" aria-hidden="true"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
         <h4 style="font-family:var(--font-display);margin-bottom:6px">Rückruf anfordern</h4>
         <p style="color:var(--gray-600);font-size:.88rem;margin-bottom:8px">Wir melden uns zeitnah bei Ihnen.</p>
         <label for="angebot-callback">Ihre Telefonnummer</label>
@@ -310,6 +311,7 @@
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           Rückruf anfordern
         </button>
+        <p class="form-hint">Wir verwenden Ihre Telefonnummer ausschließlich zur Bearbeitung Ihres Rückrufwunsches. <a href="datenschutz.html">Datenschutzhinweise</a></p>
       </form>
     </div>
   </div>
@@ -322,16 +324,10 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img src="Aramlogo.png" alt="Aram Transport Logo" class="footer-logo-img">
+          <img src="Aramlogo.png" alt="ARAM Transport Logo" class="footer-logo-img">
         </div>
-        <p class="footer-text">Zuverlässige Transport- und Umzugsfirma in Deutschland. Privatumzug, Firmentransport und Paketzustellung – bis 3,5 Tonnen, nur nach Europa.</p>
+        <p class="footer-text">Zuverlässige Transport- und Umzugsfirma in Deutschland. Fahrzeuge bis 3,5 t zulässiger Gesamtmasse; Nutzlast und Laderaummaße auf Anfrage.</p>
         <div class="footer-social">
-          <a href="#" aria-label="Facebook">
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-          </a>
-          <a href="#" aria-label="Instagram">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </a>
           <a href="https://wa.me/491719633666" aria-label="WhatsApp" target="_blank" rel="noopener">
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884"/></svg>
           </a>
@@ -346,6 +342,7 @@
           <li><a href="galerie.html">Galerie</a></li>
           <li><a href="kundenstimmen.html">Kundenstimmen</a></li>
           <li><a href="faq.html">FAQ</a></li>
+          <li><a href="ueber-uns.html">Über uns</a></li>
           <li><a href="blog.html">Blog</a></li>
         </ul>
       </div>
@@ -373,10 +370,6 @@
           <span>Deutschland</span>
         </div>
         <div class="footer-contact-item">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          <span>URN: 74448055</span>
-        </div>
-        <div class="footer-contact-item">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
           <span>USt-IdNr.: DE406845974</span>
         </div>
@@ -388,7 +381,7 @@
     </div>
     <div class="footer-bottom">
       <span>© <span id="currentYear">2026</span> ARAM. Alle Rechte vorbehalten.</span>
-      <span><a href="#">Impressum</a> · <a href="#">Datenschutz</a> · <a href="#">AGB</a></span>
+      <span><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></span>
     </div>
   </div>
 </footer>

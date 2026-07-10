@@ -4,7 +4,7 @@
 .quote{
   background:
     linear-gradient(135deg,rgba(18,37,95,.94),rgba(30,58,138,.92)),
-    url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=70') center/cover;
+    url('../Vito2.jpg') center/cover;
   color:var(--white);position:relative
 }
 
