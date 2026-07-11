@@ -73,7 +73,7 @@ body{
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
 }
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 a{text-decoration:none;color:inherit}
 button{font-family:inherit}
 

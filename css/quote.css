@@ -4,7 +4,7 @@
 .quote{
   background:
     linear-gradient(135deg,rgba(18,37,95,.94),rgba(30,58,138,.92)),
-    url('../Vito2.jpg') center/cover;
+    url('../assets/images/quote-bg.webp') center/cover;
   color:var(--white);position:relative
 }
 

@@ -17,7 +17,8 @@
 
 - [ ] Fahrzeugangabe eindeutig formulieren: „bis 3,5 t zulässige Gesamtmasse“ ist nicht dasselbe wie 3,5 t Nutzlast. Nutzlast, Ladevolumen und Laderaummaße je Fahrzeug dokumentieren.
 - [ ] Zielländer bestätigen und die Schweiz nicht als EU-Mitglied bezeichnen; Zollabwicklung gesondert erklären.
-- [ ] Belege für Bewertungen, Kundenzahlen, Transportzahlen, Antwortzeiten, Festpreise, Garantien, Versicherungsumfang und Lieferzeiten ablegen oder die Aussagen entfernen.
+- [x] ~~Belege für Bewertungen ablegen oder die Aussagen entfernen.~~ Erledigt am 11.07.2026: Alle erfundenen Kundenstimmen (Startseite, kundenstimmen.html inkl. Schema.org-Review-Markup) wurden entfernt. Echte Stimmen dürfen erst mit dokumentierter Einwilligung veröffentlicht werden.
+- [ ] Belege für Kundenzahlen, Transportzahlen, Antwortzeiten, Festpreise, Garantien, Versicherungsumfang und Lieferzeiten ablegen oder die Aussagen entfernen.
 - [ ] Versicherungs- und Lizenzangaben wortgetreu mit Police bzw. Genehmigung abgleichen.
 - [ ] Für jedes Foto Urheber, Quelle, kommerzielle Lizenz und erlaubte Bearbeitung dokumentieren. Stockfotos nicht als eigenes Fahrzeug, Team oder Kundenauftrag darstellen.
 - [ ] Öffnungszeiten und erreichbare Kontaktwege mit dem tatsächlichen Betrieb bestätigen.
@@ -28,7 +29,7 @@
 - [ ] Für Anfragen verbindliche Löschfristen festlegen und gesetzliche Aufbewahrungspflichten mit Steuerberatung oder Rechtsberatung abstimmen.
 - [ ] E-Mail-Anbieter und Empfänger der Formulare dokumentieren; Auftragsverarbeitung und Löschkonzept prüfen.
 - [ ] EmailJS-Vertrag, DPA, Unterauftragsverarbeiter, Serverstandorte und Rechtsgrundlage für eine mögliche USA-Übermittlung prüfen. Die Datenschutzerklärung behauptet bewusst noch keinen abgeschlossenen Vertrag oder Übermittlungsmechanismus.
-- [ ] Entscheiden, ob das EmailJS-SDK weiterhin erst beim Absenden über jsDelivr geladen oder lokal bereitgestellt wird; Datenschutzerklärung danach anpassen.
+- [x] ~~Entscheiden, ob das EmailJS-SDK über jsDelivr geladen oder lokal bereitgestellt wird.~~ Entschieden am 11.07.2026: SDK wird weiterhin erst beim Absenden über jsDelivr geladen; die Datenschutzerklärung beschreibt dies bereits korrekt (Abschnitt 5).
 - [ ] Zuständige deutsche Datenschutz-Aufsichtsbehörde anhand der endgültigen Geschäftsanschrift eintragen.
 - [ ] Nach dem finalen Build technisch bestätigen: kein Google Analytics, keine Marketing-/Tracking-Cookies und keine Nutzung von `localStorage` oder `sessionStorage`.
 - [ ] WhatsApp-Business-Nutzung, Verantwortlichkeiten, Nachrichtenaufbewahrung und Zugriffsrechte intern dokumentieren.
@@ -41,6 +42,6 @@
 - [ ] Formulare mit echten Testanfragen prüfen; EmailJS-Domainbeschränkung, Missbrauchsschutz und Rate-Limits einrichten.
 - [ ] SPF, DKIM und DMARC für `lw-transport.de` konfigurieren und Zustellbarkeit testen.
 - [ ] Sicherheitsheader (mindestens CSP, HSTS, `X-Content-Type-Options`, `Referrer-Policy`) beim Hoster konfigurieren.
-- [ ] Zusätzliche quadratische App-Icons in 192 × 192 und 512 × 512 px erstellen und anschließend `site.webmanifest` ergänzen.
+- [x] ~~Zusätzliche quadratische App-Icons erstellen.~~ Erledigt am 11.07.2026: `icon-192.png` und `icon-512.png` erstellt und in `site.webmanifest` eingetragen.
 - [ ] Mobile Darstellung, Tastaturbedienung, Kontrast, Ladezeit, interne Links und alle Platzhalter abschließend prüfen.
 - [ ] Impressum und Datenschutzerklärung vor Veröffentlichung von einer für deutsches Recht qualifizierten Stelle prüfen lassen.

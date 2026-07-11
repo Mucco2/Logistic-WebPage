@@ -5,7 +5,7 @@
   padding:90px 0 100px;
   background:
     linear-gradient(135deg,rgba(18,37,95,.92) 0%,rgba(30,58,138,.88) 55%,rgba(43,79,186,.85) 100%),
-    url('../Vito1.jpg') center/cover;
+    url('../assets/images/hero-start.webp') center/cover;
   color:var(--white);position:relative;overflow:hidden;
 }
 .hero::before{
