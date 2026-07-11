@@ -5,7 +5,7 @@ Sitet er 100 % statisk (HTML/CSS/JS). **Der er intet build-step og ingen miljøv
 ## 1. FØR upload – blokerende punkter
 
 - [ ] **Impressum og Datenschutzerklärung er IKKE færdige.** Begge sider indeholder synlige pladsholdere og røde advarselsbokse. Udfyld alle punkter i `LAUNCH-CHECKLIST.md` først. Sitet må ikke gå live før dette er på plads (§ 5 DDG / DSGVO).
-- [ ] Test alle tre formularer (tilbud + 2× ring-op) med rigtige testdata og bekræft, at mailen ankommer til `info@lw-transport.de`.
+- [ ] Test alle seks formularinstanser (2 tilbudsformularer + 4 ring-op-formularer) med rigtige testdata og bekræft, at mailen ankommer til `info@lw-transport.de`.
 
 ## 2. Hvad skal uploades – og hvad skal IKKE
 

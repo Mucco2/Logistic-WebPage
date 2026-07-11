@@ -3,7 +3,7 @@
    ========================================== */
 .footer{
   background:var(--gray-900);color:rgba(255,255,255,.72);
-  padding:56px 0 24px;position:relative
+  padding:56px 0 88px;position:relative
 }
 .footer::before{
   content:'';position:absolute;top:0;left:0;right:0;height:4px;

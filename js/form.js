@@ -33,11 +33,11 @@
 
       script.addEventListener('load', () => {
         if(window.emailjs) resolve(window.emailjs);
-        else reject(new Error('EmailJS kunne ikke indlæses korrekt.'));
+        else reject(new Error('EmailJS konnte nicht korrekt geladen werden.'));
       }, {once:true});
 
       script.addEventListener('error', () => {
-        reject(new Error('EmailJS SDK kunne ikke indlæses.'));
+        reject(new Error('EmailJS-SDK konnte nicht geladen werden.'));
       }, {once:true});
     }).then((emailjs) => {
       if(!emailjs.__aramInitialized){
@@ -45,6 +45,11 @@
         emailjs.__aramInitialized = true;
       }
       return emailjs;
+    }).catch((error) => {
+      emailJsReady = undefined;
+      const failedScript = document.querySelector('script[data-emailjs-sdk]');
+      if(failedScript && !window.emailjs) failedScript.remove();
+      throw error;
     });
 
     return emailJsReady;
@@ -232,12 +237,14 @@
       err.classList.add('show');
     }
   }
-  function clearError(group){
+  function clearError(group, field){
     if(!group) return;
     group.classList.remove('has-error');
     const err = group.querySelector('.form-error, .error-msg');
     if(err) err.classList.remove('show');
-    const input = group.querySelector('[aria-invalid], input:not([type="hidden"]), select, textarea');
+    const input = field && field.nodeType === 1
+      ? field
+      : group.querySelector('[aria-invalid], input:not([type="hidden"]), select, textarea');
     if(input){
       input.classList.remove('error');
       input.setAttribute('aria-invalid', 'false');
@@ -311,7 +318,7 @@
         window.showToast && window.showToast({
           type:'success',
           title:'Anfrage gesendet',
-          message:'Wir melden uns innerhalb von 24 Stunden bei Ihnen.'
+          message:'Wir melden uns in der Regel innerhalb von 24 Stunden bei Ihnen.'
         });
         return;
       }
@@ -378,7 +385,7 @@
         window.showToast && window.showToast({
           type:'success',
           title:'Anfrage gesendet',
-          message:'Wir melden uns innerhalb von 24 Stunden bei Ihnen.'
+          message:'Wir melden uns in der Regel innerhalb von 24 Stunden bei Ihnen.'
         });
       }catch(error){
         console.error('EmailJS send failed:', error);
@@ -408,7 +415,7 @@
     const existingError = group?.querySelector('.error-msg, .form-error');
     input.setAttribute('aria-invalid', 'false');
     if(existingError) associateError(input, existingError);
-    input.addEventListener('input', () => clearError(group));
+    input.addEventListener('input', () => clearError(group, input));
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -421,7 +428,7 @@
         submittingForms.add(form);
         form.setAttribute('aria-busy', 'true');
         form.reset();
-        clearError(group);
+        clearError(group, input);
         if(btn){
           btn.disabled = true;
           btn.setAttribute('aria-disabled', 'true');
@@ -461,7 +468,7 @@
         return;
       }
 
-      clearError(group);
+      clearError(group, input);
       submittingForms.add(form);
       form.setAttribute('aria-busy', 'true');
       if(btn){
